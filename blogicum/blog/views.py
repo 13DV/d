@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
 
-
-
 posts = [
     {
         'id': 0,
