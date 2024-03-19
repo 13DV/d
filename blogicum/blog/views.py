@@ -56,20 +56,13 @@ def post_detail(request, id):
     """Перебирает посты и ищите нужный по id.
     Если не найдено - возвращайте страницу 404.
     """
-    post_id = int(id)
-    post_required = None
-
     for post in posts:
-        if post['id'] == post_id:
-            post_required = post
-            break
+        if post['id'] == int(id):
+            context = {'post': post}
+            template = 'blog/detail.html'
+            return render(request, template, context)
 
-    if post_required is None:
-        raise Http404("Post not found.")
-
-    context = {'post': post_required}
-    template = 'blog/detail.html'
-    return render(request, template, context)
+    raise Http404("Post not found.")
 
 
 def category_posts(request, category_slug):
