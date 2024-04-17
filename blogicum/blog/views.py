@@ -46,26 +46,19 @@ posts = [
 
 
 def index(request):
-    reversed_posts = posts[::-1]
-    template = 'blog/index.html'
-    context = {'blog_posts': reversed_posts}
-    return render(request, template, context)
+    return render(request, 'blog/index.html', {'blog_posts': posts[::-1]})
 
 
 def post_detail(request, id):
     """Перебирает посты и ищите нужный по id.
     Если не найдено - возвращайте страницу 404.
     """
-    for post in posts:
-        if post['id'] == int(id):
-            context = {'post': post}
-            template = 'blog/detail.html'
-            return render(request, template, context)
-
-    raise Http404("Post not found.")
+    post = next((post for post in posts if post['id'] == int(id)), None)
+    if post:
+        return render(request, 'blog/detail.html', {'post': post})
 
 
 def category_posts(request, category_slug):
-    template = 'blog/category.html'
-    context = {'category_slug': category_slug}
-    return render(request, template, context)
+    return render(request, 'blog/category.html',
+                  {'category_slug': category_slug}
+                  )
