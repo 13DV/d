@@ -1,4 +1,5 @@
 {% load static %}
+{% with about_view='pages:about' rules_view='pages:rules' %}
 <header>
   <nav class="navbar navbar-light" style="background-color: lightskyblue">
     <div class="container">
@@ -13,20 +14,17 @@
           </a>
         </li>
         <li class="nav-item">
-          {% with about_view='pages:about' %}
           <a class="nav-link {% if request.resolver_match.view_name == about_view %}active{% endif %}" href="{% url about_view %}">
             О проекте
           </a>
-          {% endwith %}
         </li>
         <li class="nav-item">
-          {% with rules_view='pages:rules' %}
           <a class="nav-link {% if request.resolver_match.view_name == rules_view %}active{% endif %}" href="{% url rules_view %}">
             Наши правила
           </a>
-          {% endwith %}
         </li>
       </ul>
     </div>
   </nav>
 </header>
+{% endwith %}

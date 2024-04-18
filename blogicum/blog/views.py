@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 
 
 posts = [
@@ -53,12 +54,13 @@ def post_detail(request, id):
     """Перебирает посты и ищите нужный по id.
     Если не найдено - возвращайте страницу 404.
     """
-    post = next((post for post in posts if post['id'] == int(id)), None)
-    if post:
-        return render(request, 'blog/detail.html', {'post': post})
+    posts_with_id = [post for post in posts if post['id'] == int(id)]
+    if posts_with_id:
+        return render(request, 'blog/detail.html', {'post': posts_with_id[0]})
+    if not posts_with_id:
+        raise Http404('Post not found.')
 
 
 def category_posts(request, category_slug):
     return render(request, 'blog/category.html',
-                  {'category_slug': category_slug}
-                  )
+                  {'category_slug': category_slug})
