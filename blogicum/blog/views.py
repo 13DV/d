@@ -59,7 +59,7 @@ def get_post(posts, post_id):
 
 
 def index(request):
-    return render(request, 'blog/index.html', 
+    return render(request, 'blog/index.html',
                   {'blog_posts': list(posts_dict.values())[::-1]})
 
 
