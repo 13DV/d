@@ -13,11 +13,11 @@
   </head>
   <body>
     {% include 'includes/header.html' %}
-    <div class="container py-5">
-      <main>
+    <main>
+      <div class="container py-5">
         {% block content %}Контента пока нет :{% endblock %}
-      </main>
-    </div>
+      </div>
+    </main>
     {% include 'includes/footer.html' %}
   </body>
 </html>
