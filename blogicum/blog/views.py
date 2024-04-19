@@ -46,21 +46,12 @@ posts = [
 ]
 
 
-posts_dict = {post['id']: post for post in posts}
-
-
-def get_post(posts, post_id):
-    """
-    Получает пост по его id.
-    Если в первом аргументе передан список, поиск осуществляется в нем.
-    Если передан словарь, поиск осуществляется в нем по ключу.
-    """
-    return posts.get(post_id)
+POSTS_BY_ID = {post['id']: post for post in posts}
 
 
 def index(request):
     return render(request, 'blog/index.html',
-                  {'blog_posts': list(posts_dict.values())[::-1]})
+                  {'blog_posts': list(POSTS_BY_ID.values())[::-1]})
 
 
 def post_detail(request, id):
@@ -68,10 +59,9 @@ def post_detail(request, id):
     Ищет пост с указанным id и отображает его детали.
     Если не найден - возвращает страницу 404.
     """
-    post = get_post(posts_dict, int(id))
-    if not post:
+    if int(id) not in POSTS_BY_ID:
         raise Http404('Post not found.')
-    return render(request, 'blog/detail.html', {'post': post})
+    return render(request, 'blog/detail.html', {'post': POSTS_BY_ID[int(id)]})
 
 
 def category_posts(request, category_slug):
